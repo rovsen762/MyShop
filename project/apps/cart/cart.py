@@ -1,6 +1,7 @@
 from decimal import Decimal
 from django.conf import settings
 from apps.shop.models import Product
+
 class Cart:
     def __init__(self, request):
         self.session = request.session
@@ -30,12 +31,7 @@ class Cart:
             self.save()
 
     def __iter__(self):
-        """
-        Iterate over the items in the cart and get the products
-        from the database.
-        """
         product_ids = self.cart.keys()
-        # get the product objects and add them to the cart
         products = Product.objects.filter(id__in=product_ids)
         cart = self.cart.copy()
         for product in products:
@@ -46,7 +42,6 @@ class Cart:
             yield item
 
     def __len__(self):
-        """Count all items in the cart."""
         return sum(item['quantity'] for item in self.cart.values())
 
     def get_total_price(self):
