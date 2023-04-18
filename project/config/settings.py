@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'apps.shop',
     'apps.cart',
     'apps.orders',
+    'apps.payment',
 ]
 
 MIDDLEWARE = [
@@ -145,3 +146,9 @@ CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
 CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51MxwLcEwoC6lhSTqDEyHrudzqEmAOuY4ewtceU4hKFK0RkCPKFBZczVPtxdfcfGY583xtjuW59u9SNUZMyALGUnw006im8R8Mi'
+STRIPE_SECRET_KEY = 'sk_test_51MxwLcEwoC6lhSTqFA7mO223P7blzZQ6MLoqtsdrD1gt2W1GvGma8j0nuk9G43G9d7xH1qR2btJudS5NwfadWb9200hyWHnlTH'
+STRIPE_API_VERSION = '2022-08-01'
+
+STRIPE_WEBHOOK_SECRET = 'whsec_b803195990a20ab91b9834c08b5303c462259d07ae992bd6ed139bab9239f754'
