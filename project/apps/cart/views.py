@@ -3,6 +3,8 @@ from django.views.decorators.http import require_POST
 from apps.shop.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
+from apps.coupons.forms import CouponApplyForm
+from apps.shop.recommender import Recommender
 
 @require_POST
 def cart_add(request, product_id):
@@ -25,8 +27,13 @@ def cart_remove(request, product_id):
 
 def cart_detail(request):
     cart = Cart(request)
+    r = Recommender()
     for item in cart:
         item['update_quantity_form'] = CartAddProductForm(initial={
                             'quantity': item['quantity'],
                             'override': True})
-    return render(request, 'cart/detail.html', {'cart': cart})
+    coupon_apply_form = CouponApplyForm()
+    cart_products = [item['product'] for item in cart]
+    recommended_products = r.suggest_products_for(cart_products)
+    return render(request, 'cart/detail.html', {'cart': cart,'coupon_apply_form': coupon_apply_form,
+                                                'recommended_products': recommended_products})
