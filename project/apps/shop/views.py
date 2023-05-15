@@ -19,12 +19,15 @@ def product_list(request, category_slug=None):
                    'products': products})
 
 def product_detail(request, id, slug):
-    product = get_object_or_404(Product,id=id,slug=slug,available=True)
-    cart_product_form = CartAddProductForm()
     r = Recommender()
+
+    product = get_object_or_404(Product, id=id, slug=slug,
+                                available=True)
+    cart_product_form = CartAddProductForm()
     recommended_products = r.suggest_products_for([product], 4)
+
     return render(request,
                         'product/detail.html',
                         {'product': product,
                         'cart_product_form': cart_product_form,
-                        'recommended_products': recommended_products})
+                        'recommended_products':recommended_products})
