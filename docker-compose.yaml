@@ -1,0 +1,17 @@
+version: "3"
+
+
+services:
+  web:
+    restart: always
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.local
+    volumes: 
+      - ./project:/project #sinxronlasdirmaq ucun bizim file ile container filesini
+    build:
+      context: ./project
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+
+    
