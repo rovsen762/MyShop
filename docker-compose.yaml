@@ -16,6 +16,21 @@ services:
       - "8000:8000"
     depends_on:
       - postgresdb
+    
+
+  celery-worker:
+    restart: always
+    env_file:
+      - ./project/.env
+    volumes: 
+      - ./project:/project #sinxronlasdirmaq ucun bizim file ile container filesini
+    build:
+      context: ./project
+      dockerfile: Dockerfilecelery
+
+    command: [ "celery","-A","config" ,"worker"]
+    depends_on:
+      - web
 
   nginx:
     build:
