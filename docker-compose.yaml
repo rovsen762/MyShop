@@ -2,6 +2,7 @@ version: "3"
 
 
 services:
+
   web:
     restart: always
     environment:
@@ -26,3 +27,8 @@ services:
     volumes:
       - ./project/static/:/static
       - ./project/media/:/media
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
