@@ -5,7 +5,7 @@ services:
   web:
     restart: always
     environment:
-      - DJANGO_SETTINGS_MODULE=config.settings.local
+      - DJANGO_SETTINGS_MODULE=config.settings.production
     volumes: 
       - ./project:/project #sinxronlasdirmaq ucun bizim file ile container filesini
     build:
@@ -14,4 +14,15 @@ services:
     ports:
       - "8000:8000"
 
-    
+  nginx:
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+    depends_on:
+      # - postgresdb
+      - web
+    ports:
+      - "80:80"
+    volumes:
+      - ./project/static/:/static
+      - ./project/media/:/media
