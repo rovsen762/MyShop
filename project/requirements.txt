@@ -37,3 +37,4 @@ weasyprint==59.0
 webencodings==0.5.1
 zopfli==0.2.2
 gunicorn
+psycopg2-binary

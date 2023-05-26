@@ -5,8 +5,8 @@ services:
 
   web:
     restart: always
-    environment:
-      - DJANGO_SETTINGS_MODULE=config.settings.production
+    env_file:
+      - ./project/.env
     volumes: 
       - ./project:/project #sinxronlasdirmaq ucun bizim file ile container filesini
     build:
@@ -14,6 +14,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    depends_on:
+      - postgresdb
 
   nginx:
     build:
@@ -27,6 +29,13 @@ services:
     volumes:
       - ./project/static/:/static
       - ./project/media/:/media
+
+  postgresdb:
+    image: postgres
+    env_file:
+      - ./project/.env
+    ports:
+      - "5432:5432"
 
   redis:
     image: "redis:alpine"
